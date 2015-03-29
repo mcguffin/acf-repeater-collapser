@@ -9,12 +9,14 @@ Features:
  - Expand / Collapse an ACF repeater field
  - Remembers expanded fields (your Browser need support for localStorage in JavaScript)
  - Shows a customizable row title in collapsed state
+ - Can be used with block layout and table layout repeaters
 
 Usage:
 ------
-To use a field as row title in collapsed state add the classname 
-`collapse-row-title` to the field.
+Create a repeater field with either block layout or row layout.
+To use a field as custom row title in collapsed state add the classname 
+`collapse-row-title`.
 
 ToDo:
 -----
- - [ ] Update collapsed state after sorting.
+ - [x] Update collapsed state after sorting.

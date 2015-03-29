@@ -13,15 +13,11 @@
 	
 	$(document).ready(function() {
 //		table-layout
-		$('.acf-repeater > table.acf-table > tbody').each(function() {
+		$('.acf-repeater > table.acf-table:not(.table-layout) > tbody').each(function() {
 			var $rows = $(this).children('tr.acf-row'),
 				$table = $(this).parent(),
 				field_id = $rows.closest('.acf-field-repeater').data('key');
-			if ( $table.hasClass('table-layout') ) {
-				$table.find('thead tr:first-child').prepend('<th class="collapser"></th>');
-			} else if ( $table.hasClass('row-layout') ) {
-				// return false;
-			}
+			
 			$rows.each( function (i,el) {
 				$(collapseHtml).insertBefore( $(this).children('td.order:first') );
 				
@@ -54,14 +50,25 @@
 		return false;
 	});
 	
+	acf.add_action('sortstop',function($row) {
+		var field_id = $row.closest('.acf-field-repeater').data('key');
+		updateCollapseStates( field_id , $row.parent().children('.acf-row') );
+	});
+	
+	function updateCollapseStates( field_id , $rows ) {
+		$rows.each(function(i,el) {
+			window.localStorage[field_id+'-'+acf.o.post_id+'-'+i] = $(this).hasClass('collapsed') ? 1 : 0;
+		});
+	}
+	
+	
 	function collapseRow( $row ) {
 		// setup placeholder
 		var $fields_td = $row.children('td.acf-fields,td.acf-table-wrap'),
 			title = '',
 			$table = $row.closest('.acf-repeater > table.acf-table');
-		if ( $table.hasClass('table-layout') ) {
-// 			$table.find('thead tr:first-child').prepend('<th class="collapser"></th>');
-		} else if ( $table.hasClass('block-layout') ) {
+		
+		if ( $table.hasClass('block-layout') ) {
 			$title_fields = $fields_td.children('.collapse-row-title');
 		} else if ( $table.hasClass('row-layout') ) {
 			$title_fields = $fields_td.find('.acf-table > tbody > .collapse-row-title');
