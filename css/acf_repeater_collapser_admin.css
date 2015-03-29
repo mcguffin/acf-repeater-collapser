@@ -1,0 +1,61 @@
+.acf-table {
+	table-layout:fixed;
+}
+tr.acf-row td.collapser {
+	width:25px;
+	padding:0;
+	background:#f4f4f4;
+	vertical-align:top;
+}
+.acf-row td.collapser a.collapse {
+	font-size:25px;
+	color:#666;
+}
+
+.acf-row .dashicons-arrow-down {
+	display:initial;
+}
+.acf-row .dashicons-arrow-right {
+	display:none;
+}
+.acf-row.collapsed .dashicons-arrow-down {
+	display:none;
+}
+.acf-row.collapsed .dashicons-arrow-right {
+	display:initial;
+}
+
+.acf-row.collapsed td.acf-fields {
+	padding:0.5em !important;
+} 
+.acf-row.collapsed td.acf-fields * {
+	display:none;
+}
+
+.acf-row td.acf-fields .placeholder {
+	display:none;
+}
+.acf-row.collapsed td.acf-fields .placeholder {
+}
+.acf-row.collapsed td.acf-fields .placeholder,
+.acf-row.collapsed td.acf-fields .placeholder * {
+	display:initial;
+}
+td.acf-fields .placeholder .row-title {
+	display:inline-block;
+	font-weight:bold;
+	vertical-align:top;
+	margin-right:1em;
+}
+td.acf-fields .placeholder .row-title label {
+	display:inline-block;
+	font-weight:normal;
+	vertical-align:top;
+	margin-right:0.25em;
+	color:#aaa;
+}
+
+
+.acf-row td.order {
+	position:relative;
+}
