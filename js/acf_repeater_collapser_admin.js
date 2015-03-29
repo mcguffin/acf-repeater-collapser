@@ -12,9 +12,16 @@
 	// 
 	
 	$(document).ready(function() {
-		$('.acf-repeater > table.acf-table > tbody').each(function(){
+//		table-layout
+		$('.acf-repeater > table.acf-table > tbody').each(function() {
 			var $rows = $(this).children('tr.acf-row'),
+				$table = $(this).parent(),
 				field_id = $rows.closest('.acf-field-repeater').data('key');
+			if ( $table.hasClass('table-layout') ) {
+				$table.find('thead tr:first-child').prepend('<th class="collapser"></th>');
+			} else if ( $table.hasClass('row-layout') ) {
+				// return false;
+			}
 			$rows.each( function (i,el) {
 				$(collapseHtml).insertBefore( $(this).children('td.order:first') );
 				
@@ -49,9 +56,19 @@
 	
 	function collapseRow( $row ) {
 		// setup placeholder
-		var $fields_td = $row.children('td.acf-fields'),
-			title = '';
-		$fields_td.children('.collapse-row-title').each(function(){
+		var $fields_td = $row.children('td.acf-fields,td.acf-table-wrap'),
+			title = '',
+			$table = $row.closest('.acf-repeater > table.acf-table');
+		if ( $table.hasClass('table-layout') ) {
+// 			$table.find('thead tr:first-child').prepend('<th class="collapser"></th>');
+		} else if ( $table.hasClass('block-layout') ) {
+			$title_fields = $fields_td.children('.collapse-row-title');
+		} else if ( $table.hasClass('row-layout') ) {
+			$title_fields = $fields_td.find('.acf-table > tbody > .collapse-row-title');
+		}
+		// block layout
+		
+		$title_fields.each(function(){
 			var label = $(this).find('.acf-label label').ignore('.acf-required').text()+': ',
 				value;
 			switch ( $(this).data('type') ) {
@@ -75,9 +92,9 @@
 			
 			title += '<span class="row-title"><label>'+ label + '</label>' + value + '</span> ';
 		});
-		if ( ! $fields_td.children('.placeholder').length )
-			$fields_td.prepend('<div class="placeholder"></div>');
-		$fields_td.children('.placeholder').html(title);
+		if ( ! $fields_td.children('.acf-collapse-placeholder').length )
+			$fields_td.prepend('<div class="acf-collapse-placeholder"></div>');
+		$fields_td.children('.acf-collapse-placeholder').html(title);
 
 		// collapse row
 		$row.addClass('collapsed');
