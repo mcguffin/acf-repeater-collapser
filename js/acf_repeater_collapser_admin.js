@@ -10,7 +10,6 @@
 	}
 	var collapseHtml = '<td class="collapser"><a href="#" class="collapse dashicons dashicons-arrow-down"></a><a href="#" class="collapse dashicons dashicons-arrow-right"></a></td>';
 	// 
-	
 	$(document).ready(function() {
 //		table-layout
 		$('.acf-repeater > table.acf-table:not(.table-layout) > tbody').each(function() {
@@ -88,6 +87,12 @@
 				case 'select':
 					value = $(this).find('.acf-input select :selected').text();	
 					break;
+				case 'textarea':
+					value = (function(v){ 
+						var lines = v.split('\n');
+						return lines.shift() + (lines.length ? ' [...]' : '');
+					})( $(this).find('.acf-input textarea').val() );
+					break;
 				case 'wysiwyg':
 					// set first line
 					value = $( $(this).find('.acf-input textarea').val().split('\n').shift() ).text() + ' [...]';
@@ -96,7 +101,7 @@
 					value = $(this).find('.acf-input input[type!="hidden"]').val();	
 					break;
 			}
-			
+
 			title += '<span class="row-title"><label>'+ label + '</label>' + value + '</span> ';
 		});
 		if ( ! $fields_td.children('.acf-collapse-placeholder').length )
