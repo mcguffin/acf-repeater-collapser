@@ -17,11 +17,11 @@ Create a repeater field with either block layout or row layout.
 To use a field as custom row title in collapsed state add the classname 
 `collapse-row-title`.
 
-![Add Classname](/mcguffin/acf-repeater-collapser/screenshot-1.png?raw )
+![Add Classname](/mcguffin/acf-repeater-collapser/master/screenshot-1.png?raw )
 
 The Result:
 -----------
-![The Result](/mcguffin/acf-repeater-collapser/screenshot-2.png?raw )
+![The Result](/mcguffin/acf-repeater-collapser/master/screenshot-2.png?raw )
 
 
 
