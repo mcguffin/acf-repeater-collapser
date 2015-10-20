@@ -12,7 +12,13 @@
 	// 
 	$(document).ready(function() {
 //		table-layout
-		$('.acf-repeater > table.acf-table:not(.table-layout) > tbody').each(function() {
+		var selectors = [
+			".acf-repeater.-block > table.acf-table > tbody", // ACF >= 5.3
+			".acf-repeater.-row > table.acf-table > tbody",
+			".acf-repeater > table.acf-table.row-layout > tbody", // ACF < 5.3
+			".acf-repeater > table.acf-table.block-layout > tbody"
+			];
+		$( selectors.join(',') ).each(function() {
 			var $rows = $(this).children('tr.acf-row'),
 				$table = $(this).parent(),
 				field_id = $rows.closest('.acf-field-repeater').data('key');
@@ -67,10 +73,14 @@
 			title = '',
 			$table = $row.closest('.acf-repeater > table.acf-table');
 		
+		// 
 		if ( $table.hasClass('block-layout') ) {
 			$title_fields = $fields_td.children('.collapse-row-title');
 		} else if ( $table.hasClass('row-layout') ) {
 			$title_fields = $fields_td.find('.acf-table > tbody > .collapse-row-title');
+		} else {
+			// vast DOM changes in ACF 5.3
+			$title_fields = $row.children('.acf-fields').children('.acf-field.collapse-row-title');
 		}
 		// block layout
 		
