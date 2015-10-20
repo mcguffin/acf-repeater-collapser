@@ -131,7 +131,6 @@
 			
 		});
 		
-console.log(title);
 		if ( ! $fields_td.children('.acf-collapse-placeholder').length )
 			$fields_td.prepend('<div class="acf-collapse-placeholder"></div>');
 		$fields_td.children('.acf-collapse-placeholder').html(title);
