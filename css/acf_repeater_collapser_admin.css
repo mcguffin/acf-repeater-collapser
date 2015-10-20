@@ -2,7 +2,7 @@
 	table-layout:fixed;
 }
 tr.acf-row td.collapser,
-tr.acf-row th.collapser {
+th.collapser {
 	width:25px;
 	padding:0;
 	background:#f4f4f4;
@@ -29,24 +29,29 @@ tr.acf-row th.collapser {
 .acf-row.collapsed td.acf-fields {
 	padding:0.5em !important;
 } 
-.acf-row.collapsed td.acf-fields *,
-.acf-row.collapsed td.acf-table-wrap * {
+
+.acf-row.collapsed td.acf-field > *,
+.acf-row.collapsed td.acf-fields > *,
+.acf-row.collapsed td.acf-table-wrap > * {
 	display:none;
 }
 
+.acf-row td.acf-field .acf-collapse-placeholder,
 .acf-row td.acf-fields .acf-collapse-placeholder,
 .acf-row td.acf-table-wrap .acf-collapse-placeholder {
 	display:none;
 }
+
 .acf-row.collapsed td.acf-table-wrap {
 	padding:0.5em;
 }
-.acf-row.collapsed td.acf-fields .acf-collapse-placeholder {
-}
+
+.acf-row.collapsed td.acf-field .acf-collapse-placeholder,
+.acf-row.collapsed td.acf-field .acf-collapse-placeholder > *,
 .acf-row.collapsed td.acf-fields .acf-collapse-placeholder,
-.acf-row.collapsed td.acf-fields .acf-collapse-placeholder *,
+.acf-row.collapsed td.acf-fields .acf-collapse-placeholder > *,
 .acf-row.collapsed td.acf-table-wrap .acf-collapse-placeholder,
-.acf-row.collapsed td.acf-table-wrap .acf-collapse-placeholder * {
+.acf-row.collapsed td.acf-table-wrap .acf-collapse-placeholder > * {
 	display:initial;
 }
 .acf-collapse-placeholder .row-title {

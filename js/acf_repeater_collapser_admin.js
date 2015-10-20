@@ -15,12 +15,15 @@
 		var selectors = [
 			".acf-repeater.-block > table.acf-table > tbody", // ACF >= 5.3
 			".acf-repeater.-row > table.acf-table > tbody",
+			".acf-repeater.-table > table.acf-table > tbody",
 			".acf-repeater > table.acf-table.row-layout > tbody", // ACF < 5.3
 			".acf-repeater > table.acf-table.block-layout > tbody"
 			];
+		// prepare tables
 		$( selectors.join(',') ).each(function() {
 			var $rows = $(this).children('tr.acf-row'),
 				$table = $(this).parent(),
+				$thead = $table.children('thead'),
 				field_id = $rows.closest('.acf-field-repeater').data('key');
 			
 			$rows.each( function (i,el) {
@@ -36,6 +39,7 @@
 						collapseRow($(this));
 				}
 			} );
+			$('<th class="collapser"></th>').prependTo($thead.children('tr'));
 		} );
 	}).on('click','.acf-repeater a.collapse',function(e){
 		// set state
@@ -71,7 +75,9 @@
 		// setup placeholder
 		var $fields_td = $row.children('td.acf-fields,td.acf-table-wrap'),
 			title = '',
-			$table = $row.closest('.acf-repeater > table.acf-table');
+			$repeater = $row.closest('.acf-repeater'),
+			$table = $row.closest('.acf-repeater > table.acf-table'),
+			is_table_layout = $repeater.hasClass('-table');
 		
 		// 
 		if ( $table.hasClass('block-layout') ) {
@@ -80,13 +86,21 @@
 			$title_fields = $fields_td.find('.acf-table > tbody > .collapse-row-title');
 		} else {
 			// vast DOM changes in ACF 5.3
-			$title_fields = $row.children('.acf-fields').children('.acf-field.collapse-row-title');
+			if ( $repeater.hasClass('-table') ) {
+				$title_fields = $row.children('.acf-field.collapse-row-title');
+			} else {
+				$title_fields = $row.children('.acf-fields').children('.acf-field.collapse-row-title');
+			}
 		}
 		// block layout
 		
 		$title_fields.each(function(){
-			var label = $(this).find('.acf-label label').ignore('.acf-required').text()+': ',
-				value;
+			var $this = $(this), label, value;
+			
+			if ( ! is_table_layout ) {
+				label = $(this).find('.acf-label label').ignore('.acf-required').text().trim() + ': ';
+			}
+
 			switch ( $(this).data('type') ) {
 				case 'true_false':
 					value = $(this).find('.acf-input input[type="checkbox"]').prop('checked') ? 'Yes' : 'No';
@@ -111,9 +125,13 @@
 					value = $(this).find('.acf-input input[type!="hidden"]').val();	
 					break;
 			}
-
 			title += '<span class="row-title"><label>'+ label + '</label>' + value + '</span> ';
+			
+			is_table_layout && !$this.children('.acf-collapse-placeholder').length && $this.prepend('<div class="acf-collapse-placeholder"><span class="row-title">'+value+'</span></div>');
+			
 		});
+		
+console.log(title);
 		if ( ! $fields_td.children('.acf-collapse-placeholder').length )
 			$fields_td.prepend('<div class="acf-collapse-placeholder"></div>');
 		$fields_td.children('.acf-collapse-placeholder').html(title);

@@ -9,7 +9,7 @@ Features:
  - Expand / Collapse an ACF repeater field
  - Remembers expanded fields (your Browser need support for localStorage in JavaScript)
  - Shows a customizable row title in collapsed state (add classname `collapse-row-title`)
- - Can be used with block layout and table layout repeaters
+ - Can be used with any repeaters layout since ACF 5.3. (Table layout is not supported in ACF < 5.3)
 
 Usage:
 ------
