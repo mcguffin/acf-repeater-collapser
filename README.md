@@ -1,3 +1,6 @@
+**Notice:** This Plugin is Abandonware<br>
+ACF Pro now has its own collapsing method.
+
 ACF Repeater Collapser
 ======================
 
